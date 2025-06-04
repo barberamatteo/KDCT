@@ -46,9 +46,47 @@ object DCT2: DCT{
     }
 
     fun cutFrequencies(transformedBlocks: Array<Array<Matrix>>, threshold: Int){
-        for (blocksRow in transformedBlocks){
-            for (block in blocksRow){
+        val blockSize = transformedBlocks[0][0].rows
+        if (threshold > 2 * blockSize - 2){
+            throw RuntimeException("Invalid threshold value: it must be between 0 and " +
+                    "${2 * blockSize - 2}"
+            )
+        }
+        if (threshold > blockSize){
+            /*
+             * Starting from the block matrix, setting entry by entry to 0.0 from the bottom-right corner
+             */
+            for (blocksRow in transformedBlocks){
+                for (block in blocksRow){
+                    val tmp = block.copy()
+                    var delta = threshold - blockSize + 1
+                    for (i in blockSize - 1 downTo delta){
+                        for (j in blockSize - 1 downTo delta){
+                            tmp[i, j] = 0.0
+                        }
+                        delta++
+                    }
+                    block < Matrix(tmp)
+                }
+            }
+        } else {
+            /*
+             * Starting from zeros matrix, filling it entry by entry
+             * to the corresponding block entry from the top-left corner
+             */
 
+            for (blocksRow in transformedBlocks) {
+                for (block in blocksRow) {
+                    val tmp = Matrix(blockSize, blockSize)
+                    var decrementingThreshold = threshold
+                    for (i in 0 until decrementingThreshold){
+                        for (j in 0 until decrementingThreshold){
+                            tmp[i, j] = block[i, j]
+                        }
+                        decrementingThreshold--
+                    }
+                    block < Matrix(tmp)
+                }
             }
         }
     }
