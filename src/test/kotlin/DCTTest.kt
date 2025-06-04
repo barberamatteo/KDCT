@@ -1,6 +1,6 @@
 import it.matteobarbera.dct.DCT1
 import it.matteobarbera.dct.DCT2
-import it.matteobarbera.images.Splitter
+import it.matteobarbera.images.SplitterMerger
 import it.matteobarbera.model.Matrix
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -9,7 +9,7 @@ class DCTTest {
 
     val dct1 = DCT1
     val dct2 = DCT2
-    val splitter = Splitter
+    val splitter = SplitterMerger
     @Test
     fun dct1Test(){
         val vals = doubleArrayOf(

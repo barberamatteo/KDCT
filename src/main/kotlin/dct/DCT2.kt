@@ -37,6 +37,15 @@ object DCT2: DCT{
         return toRet
     }
 
+    fun fastInverseTransform(transformedMatrix: Matrix): Matrix {
+        val toRet = transformedMatrix.copy()
+        DoubleDCT_2D(
+            toRet.rows,
+            toRet.cols
+        ).inverse(toRet.vals, true)
+        return toRet
+    }
+
     fun transformBlocks(blocks: Array<Array<Matrix>>){
         for (blocksRow in blocks){
             for (block in blocksRow){

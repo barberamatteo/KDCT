@@ -9,6 +9,7 @@ object BitmapUtils {
 
     fun parseBitmap(fileName: String): Matrix{
         val img = ImageIO.read(File(fileName))
+
         val grayImage = BufferedImage(
             img.width,
             img.height,
@@ -35,5 +36,19 @@ object BitmapUtils {
             )
         }
         return toRet
+    }
+
+    fun drawBitmap(pixels: Matrix): BufferedImage{
+        val bufferedImage = BufferedImage(
+            pixels.cols,
+            pixels.rows,
+            BufferedImage.TYPE_BYTE_GRAY
+        )
+        val raster = bufferedImage.raster
+        for (i in 0 until pixels.rows){
+            val row = pixels.getRow(i).vals[0].map { it.toInt().toByte() }.toByteArray()
+            raster.setDataElements(0, i, row)
+        }
+        return bufferedImage
     }
 }
