@@ -32,9 +32,9 @@ class BitmapTest {
                 doubleArrayOf(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
                 )
         )
-
-        val img = BitmapUtils.drawBitmap(m)
-        ImageIO.write(img, "bmp", File("zebra.bmp"))
+        val a20x20 = BitmapUtils.parseBitmap("src/test/resources/deer.bmp")
+        val img = BitmapUtils.drawBitmap(a20x20)
+        ImageIO.write(img, "bmp", File("a20x20.bmp"))
     }
 
 }

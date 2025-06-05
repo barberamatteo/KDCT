@@ -23,10 +23,15 @@ class MainUseCaseTest {
         )*/
 
         val deer = BitmapUtils.parseBitmap("src/test/resources/20x20.bmp")
-        val F = 4
+        val F = 3
         val d = 4
         val transformed = Matrix(deer)
         val split = SplitterMerger.split(transformed, F)
+        for (i in 0 until split.size) {
+            for (j in 0 until split[0].size) {
+                split[i][j] < DCT2.fastTransform(split[i][j])
+            }
+        }
         DCT2.cutFrequencies(split, d)
         for (blocksRow in split){
             for (block in blocksRow){

@@ -46,8 +46,12 @@ object BitmapUtils {
         )
         val raster = bufferedImage.raster
         for (i in 0 until pixels.rows){
-            val row = pixels.getRow(i).vals[0].map { it.toInt().toByte() }.toByteArray()
-            raster.setDataElements(0, i, row)
+            for (j in 0 until pixels.cols){
+                val pix = pixels[i, j].toInt()
+                raster.setPixel(j,i, intArrayOf(pix, pix, pix))
+            }
+//            val row = pixels.getRow(i).vals[0].map { it.toInt().toByte() }.toByteArray()
+//            raster.setDataElements(0, i, row)
         }
         return bufferedImage
     }

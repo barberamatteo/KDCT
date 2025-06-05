@@ -40,7 +40,10 @@ class DCTTest {
             doubleArrayOf(87.0, 149.0, 57.0, 192.0, 65.0, 129.0, 178.0, 228.0)
         )
         val m = Matrix(vals)
-        print(dct2.transform(m))
+        val forward = dct2.fastTransform(m)
+        val backward = dct2.fastInverseTransform(forward)
+        assertEquals(m, backward)
+        print(backward)
     }
 
     @Test
