@@ -1,3 +1,4 @@
+import it.matteobarbera.MainPipeline
 import it.matteobarbera.dct.DCT2
 import it.matteobarbera.images.SplitterMerger
 import it.matteobarbera.images.bitmap.BitmapUtils
@@ -6,6 +7,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 import javax.imageio.ImageIO
 import kotlin.math.ceil
+import kotlin.test.assertEquals
 
 class MainUseCaseTest {
 
@@ -22,9 +24,9 @@ class MainUseCaseTest {
             doubleArrayOf(87.0, 149.0, 57.0, 192.0, 65.0, 129.0, 178.0, 228.0)
         )*/
 
-        val deer = BitmapUtils.parseBitmap("src/test/resources/20x20.bmp")
-        val F = 3
-        val d = 4
+        val deer = BitmapUtils.parseBitmap("src/test/resources/deer.bmp")
+        val F = 100
+        val d = 90
         val transformed = Matrix(deer)
         val split = SplitterMerger.split(transformed, F)
         for (i in 0 until split.size) {
@@ -60,4 +62,92 @@ class MainUseCaseTest {
 
 
     }
+
+    @Test
+    fun deerTest(){
+        val pipeline = MainPipeline()
+        val F = 16
+        val d = 10
+        pipeline
+            .initializeImage("src/test/resources/deer.bmp")
+            .setBlockSize(F)
+            .setThreshold(d)
+            .split()
+            .applyDCT2()
+            .cutFrequencies()
+            .applyIDCT2AndCeil()
+            .merge()
+            .write("src/test/resources/out/deer_F${F}_d$d.bmp")
+    }
+
+    @Test
+    fun cathedralTest(){
+        val pipeline = MainPipeline()
+        val F = 10
+        val d = 7
+        pipeline
+            .initializeImage("src/test/resources/cathedral.bmp")
+            .setBlockSize(F)
+            .setThreshold(d)
+            .split()
+            .applyDCT2()
+            .cutFrequencies()
+            .applyIDCT2AndCeil()
+            .merge()
+            .write("src/test/resources/out/cathedral_F${F}_d$d.bmp")
+    }
+
+    @Test
+    fun shoeTest(){
+        val pipeline = MainPipeline()
+        val F = 10
+        val d = 7
+        pipeline
+            .initializeImage("src/test/resources/shoe.bmp")
+            .setBlockSize(F)
+            .setThreshold(d)
+            .split()
+            .applyDCT2()
+            .cutFrequencies()
+            .applyIDCT2AndCeil()
+            .merge()
+            .write("src/test/resources/out/shoe_F${F}_d$d.bmp")
+    }
+
+    @Test
+    fun bridgeTest(){
+        val pipeline = MainPipeline()
+        val filePath = "src/test/resources/bridge.bmp"
+        val F = 10
+        val d = 7
+        pipeline
+            .initializeImage(filePath)
+            .setBlockSize(F)
+            .setThreshold(d)
+            .split()
+            .applyDCT2()
+            .cutFrequencies()
+            .applyIDCT2AndCeil()
+            .merge()
+            .write("${filePath}_F${F}_d$d.bmp")
+    }
+
+    @Test
+    fun _640Test(){
+        val pipeline = MainPipeline()
+        val filePath = "src/test/resources/640x640.bmp"
+        val F = 16
+        val d = 12
+        pipeline
+            .initializeImage(filePath)
+            .setBlockSize(F)
+            .setThreshold(d)
+            .split()
+            .applyDCT2()
+            .cutFrequencies()
+            .applyIDCT2AndCeil()
+            .merge()
+            .write("${filePath}_F${F}_d$d.bmp")
+    }
+
 }

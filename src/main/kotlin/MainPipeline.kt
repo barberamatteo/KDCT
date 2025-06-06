@@ -13,7 +13,7 @@ class MainPipeline {
     private lateinit var splitImage: Array<Array<Matrix>>
     private var F: Int = -1
     private var d = -1
-    private lateinit var mergedImage: Matrix
+    lateinit var mergedImage: Matrix
 
 
     fun initializeImage(path: String): MainPipeline {
@@ -78,8 +78,13 @@ class MainPipeline {
         ImageIO.write(
             BitmapUtils.drawBitmap(pixels = mergedImage),
             "bmp",
-            File("$filePath.bmp")
+            File(filePath)
         )
         return this
+    }
+
+
+    fun getBufferedImage(){
+
     }
 }

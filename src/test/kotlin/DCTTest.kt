@@ -23,7 +23,7 @@ class DCTTest {
             245.0
         )
         val m = Matrix(vals, asColumnVector = true)
-        print(dct1.transform(m))
+        val output = dct1.transform(m)
 
     }
 

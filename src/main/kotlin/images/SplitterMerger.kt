@@ -1,7 +1,6 @@
 package it.matteobarbera.images
 
 import it.matteobarbera.model.Matrix
-import it.matteobarbera.utils.MatrixUtils
 
 object SplitterMerger {
     fun split(img: Matrix, blockSize: Int): Array<Array<Matrix>> {
@@ -31,9 +30,8 @@ object SplitterMerger {
         val toRet = Matrix(blockSize * m.size, blockSize * m[0].size)
         for (i in 0 until m.size){
             for (j in 0 until m[i].size){
-                MatrixUtils.setMatrix(
-                    toRet,
-                        blockSize * i,
+                toRet.setSubMatrix(
+                    blockSize * i,
                     blockSize * j,
                     m[i][j]
                 )

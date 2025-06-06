@@ -27,4 +27,13 @@ class FunctionSamplerTest {
             print("$e, ")
         }
     }
+
+    @Test
+    fun spaceMiddlePointTest(){
+        val size = 8
+        val res = functionSampler.spacedMiddlePoints(size)
+        for (i in res){
+            print("$i, ")
+        }
+    }
 }
